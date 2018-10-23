@@ -1,6 +1,6 @@
 public class Ex1 {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         double area = 0.0;
 
         try {
@@ -16,12 +16,12 @@ public class Ex1 {
                 area = Ex1.calcula(valores[0], valores[1]);
                 Ex1.printArea("retangulo", area);
                 break;
-                
-                case 3:
+
+            case 3:
                 area = Ex1.calcula(valores[0], valores[1], valores[2]);
                 String tipoTriangulo = Ex1.getTipoTriangulo(valores[0], valores[1], valores[2]);
                 Ex1.printArea("triangulo", area);
-                System.out.println("O triangulo e " + tipoTriangulo + ".");
+                System.out.format("O triangulo e %s.\n", tipoTriangulo);
                 break;
             }
 
@@ -66,11 +66,17 @@ public class Ex1 {
         for (int i = 0; i < args.length; i++) {
             try {
                 valores[i] = Double.parseDouble(args[i]);
+                if (valores[i] <= 0) { throw new Exception(); }
+            } catch (NumberFormatException e) {
+                if (erro.trim().length() > 0) {
+                    erro += '\n';
+                }
+                erro += String.valueOf(i + 1) + "o argumento, \"" + String.valueOf(args[i]) + "\", nao eh numero.";
             } catch (Exception e) {
                 if (erro.trim().length() > 0) {
                     erro += '\n';
                 }
-                erro += String.valueOf(i+1) + "o argumento, \"" + String.valueOf(args[i]) + "\", nao eh numero.";
+                erro += String.valueOf(i + 1) + "o argumento, \"" + String.valueOf(args[i]) + "\", eh menor ou igual a zero. Só são válidos números positivos.";
             }
         }
 
@@ -96,7 +102,7 @@ public class Ex1 {
     private static String getTipoTriangulo(double l1, double l2, double l3) {
         if (l1 == l2 && l2 == l3) {
             return "equilatero";
-        } 
+        }
 
         if (l1 != l2 && l2 != l3) {
             return "escaleno";
